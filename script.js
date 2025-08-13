@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const bgm = document.getElementById('bgm');
+    bgm.volume = 0.7;
+    bgm.muted = true;
+
+    function enableBgm() {
+        bgm.muted = false;
+        bgm.play();
+        document.removeEventListener('click', enableBgm);
+    }
+    document.addEventListener('click', enableBgm);
+	
     const house = document.getElementById('house');
     const messageBtn = document.getElementById('message-btn');
     const pomodoroBtn = document.getElementById('pomodoro-btn');
@@ -217,4 +229,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         update();
     }
+
 });
