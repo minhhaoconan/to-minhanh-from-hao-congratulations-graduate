@@ -1,0 +1,205 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+p {font-weight:600;}
+
+.bg-day {
+    background-image: url('img/bg_day.jpg');
+}
+
+.bg-night2 {
+    background-image: url('img/bg_night2.jpg');
+}
+
+#house {
+    position: absolute;
+    bottom: 0.5vw;
+    left: 2vw;
+    width: 20vw;
+    cursor: pointer;
+}
+
+#sunflowers {
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+}
+
+#message-btn, #pomodoro-btn {
+	font-family: 'Quicksand', sans-serif;
+	font-weight: 600;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 0 10px;
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #e1464c;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+#message-btn:hover, #pomodoro-btn:hover {
+	background: #9d1523;
+    transform: scale(1.05);
+}
+
+.buttons-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#letter {
+	font-family: "Playpen Sans", cursive;
+	text-align: justify;
+	font-style: italic;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFE8D6;
+    color: #1A535C;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(26, 83, 92, 0.2);
+	max-height: 70vh;
+	overflow-y: auto;
+}
+
+#letter, #pomodoro {
+    z-index: 200;
+}
+
+@keyframes slideDown {
+    from { top: -100%; }
+    to { top: 50%; }
+}
+
+.hidden {
+    display: none;
+}
+
+#pomodoro {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #A7D49B;
+    padding: 30px;
+    border-radius: 16px;
+	border: 1px solid #F2E86D;
+	box-shadow: 0 6px 20px rgba(26, 83, 92, 0.15);
+    text-align: center;
+    width: 350px;
+    max-width: 90%;
+    z-index: 200;
+}
+
+.mode-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.mode-buttons button {
+    background: #355C4C;
+    color: #FDFBF7;
+    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+.mode-buttons button.active {
+    background: #E96A5C;
+}
+.mode-buttons button:hover {
+    background: #E96A5C;
+}
+
+#timer {
+    position: static;
+    transform: none;
+    font-size: 40px;
+    font-weight: bold;
+    color: #1A535C;
+    line-height: 1;
+    text-align: center;
+    margin: 20px 20px;
+}
+
+.pomodoro-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+.pomodoro-controls button {
+    background: #3AB8AD;
+    color: #FDFBF7;
+    font-weight: bold;
+    min-width: 100px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+.pomodoro-controls button:hover {
+    background: #2FA59A;
+}
+
+#game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2E2D4D;
+}
+
+#character {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 10vw;
+    height: 10vw;
+    z-index: 0;
+    background: url('img/char.png') no-repeat center/contain;
+    animation: runAcross 5s linear forwards;
+}
+
+@keyframes runAcross {
+    0% { left: 100px; }
+    100% { left: 100%; }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(253, 251, 247, 0.6);
+    z-index: 100;
+}

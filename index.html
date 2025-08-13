@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<link rel="icon" type="image/png" href="img/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Minh Anh from Hao</title>
+    <link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="background" class="bg-day"></div>
+    <img id="house" src="img/house.png" alt="House">
+    <img id="sunflowers" src="img/sunflowers.png" alt="Sunflowers">
+    <div class="buttons-wrapper">
+        <button id="message-btn">Lời nhắn</button>
+        <button id="pomodoro-btn">Pomodoro</button>
+    </div>
+    <div id="letter" class="hidden">
+        <p>Tốt nghiệp rồi nhỉ...</p>
+		<p>Dù hai ta đã làm nô lệ tư bản từ lâu, nhưng đây vẫn là lần đầu tiên ta chính thức bước qua cánh cửa mới, vào một giai đoạn mới của đời người.</p>
+		<p>Tao rất vui vì đã được đồng hành cùng mày đến hôm nay, thấm thoắt đã 10 năm rồi á má ^_^</p>
+		<p>Tao biết có thể mày sẽ còn đi học tiếp. Hoặc không. Nhưng điều đó không ngăn ngày này trở thành một ngày đáng nhớ.</p>
+		<p>Nhân dịp này, tao sẽ mượn những món quà tao tặng mày để gửi những lời chúc tốt đẹp nhất cho mày nhé. Chắc hơi nhiều đó (•_•)</p>
+		<p>Đầu tiên, với rất nhiều hoa hướng dương trên trang và mô hình logo hướng dương để bàn, tao mong mày sẽ luôn hướng về ánh mặt trời, giữ được nụ cười trên môi, tựa như ấn tượng mày đã tạo cho tao suốt những năm qua. Dẫu đêm tối đôi khi vẫn sẽ có lúc mày cảm thấy đau buồn, nhưng rồi hôm sau, tao tin mày sẽ lại tươi sáng.</p>
+		<p>Thứ hai, chúc mày sẽ sớm ngày có một "căn nhà", một "khoảnh trời" tự do của riêng mày. Mà nếu nhấn vào căn nhà, mày cũng sẽ thấy nhóc Maruko chạy ra, chạy mãi chạy mãi chạy vượt mọi chướng ngại vật. Ý là, dù bận rộn đến đâu, khó khăn đến đâu, thì mày vẫn an tâm là đứa trẻ trong mày sẽ cùng mày đồng hành. Ai cũng mãi có một đứa trẻ trong tâm hồn thôi, không nhất thiết phải vội lớn chi đâu bạn hiền.</p>
+		<p>Thứ ba, với một cái đồng hồ hơi đơn giản, hi vọng mày giữ gìn được work-life & work-rest ballance. Cái này quan trọng lắm đó, khỏi nói nhiều. Có sức khỏe là có tất.</p>
+		<p>Thứ tư, với rất nhiều bầu trời sao cùng Van Gogh, nguyện mày vẫn luôn là một Song Ngư mơ mộng, có nhiều hoài bão trong tim. Hi vọng mỗi lần có idea mới, có bài thơ mới, có câu caption mới ghi vào sổ, hay khi lật một trang sách mới, mày sẽ lại thấy những bầu trời sao nọ đẹp biết nhường nào.</p>
+		<p>Và cuối cùng, bằng hai tập truyện tao đã thẩm (có anime Netflix nữa đó), chúc mày tìm được tư bản cùng người sếp trong mơ như cách Momose đã vô tình ngước lên thấy bầu trời hi vọng.</p>
+		<p>Ngày đặc biệt mà, chúc nhiều xíu hi vọng cũng không sao. Chủ yếu hơn chúc chính là muốn nhắn nhủ đến mày đôi điều vậy thôi 💌</p>
+		<p style="text-align: right; font-style: italic; color: #e1464c;">Hảo</p>
+    </div>
+    <div id="pomodoro" class="hidden">
+        <h2>Pomodoro Timer</h2>
+        <div class="mode-buttons">
+            <button class="active" data-mode="pomodoro">Pomodoro</button>
+            <button data-mode="short">Short Break</button>
+            <button data-mode="long">Long Break</button>
+        </div>
+		<div id="timer"></div>
+        <div class="pomodoro-controls">
+            <button id="start-pause">Bắt đầu</button>
+            <button id="reset-pomodoro">Reset</button>
+        </div>
+        <p>Pomodoro đã hoàn thành: <span id="pomo-count">0</span></p>
+    </div>
+    <div id="character" class="hidden"></div>
+    <canvas id="game" class="hidden"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>
