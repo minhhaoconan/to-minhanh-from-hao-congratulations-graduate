@@ -1,18 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    const bgm = document.getElementById('bgm');
-    bgm.volume = 0.7;
-    bgm.muted = true;
-
-    function enableBgm() {
-        bgm.muted = false;
-        bgm.play();
-        document.removeEventListener('click', enableBgm);
-    }
-    document.addEventListener('click', enableBgm);
 	
+	const bgm = document.getElementById('bgm');
+	bgm.volume = 0.7;
+	bgm.muted = true;
+	let spotifyMaster = false;
+	
+	function enableBgm() {
+	    if (!spotifyMaster) {
+	        bgm.muted = false;
+	        bgm.play();
+	    }
+	    document.removeEventListener('click', enableBgm);
+	}
+	document.addEventListener('click', enableBgm);
+
 	const spotifyBtn = document.getElementById('spotify-btn');
 	const spotify = document.getElementById('spotify');
+	const spotifyPlay = document.getElementById('spotify-play');
+	const spotifyPause = document.getElementById('spotify-pause');
+
 
     const house = document.getElementById('house');
     const messageBtn = document.getElementById('message-btn');
@@ -30,17 +36,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const groundOffset = 5;
 	const obstacleImg = new Image();
 	obstacleImg.src = 'img/obstacle.png';
-
-    function openPopup(popupEl) {
-        const overlay = document.createElement('div');
-        overlay.classList.add('overlay');
-        document.body.appendChild(overlay);
-        popupEl.classList.remove('hidden');
-        overlay.addEventListener('click', () => {
-            popupEl.classList.add('hidden');
-            overlay.remove();
-        });
-    }
+	
+	function openPopup(popupEl) {
+	    const overlay = document.createElement('div');
+	    overlay.classList.add('overlay');
+	    document.body.appendChild(overlay);
+	    if (popupEl === spotify) {
+	        spotifyMaster = true;
+	        bgm.pause();
+	    }
+	    popupEl.classList.remove('hidden');
+	    overlay.addEventListener('click', () => {
+	        popupEl.classList.add('hidden');
+	        overlay.remove();
+	    });
+	}
+	
+	spotifyPlay.addEventListener('click', () => {
+	    spotifyMaster = true;
+	    bgm.pause();
+	});
+	spotifyPause.addEventListener('click', () => {
+	    spotifyMaster = false;
+	    if (!bgm.muted) bgm.play();
+	});
 
     messageBtn.addEventListener('click', () => {
         openPopup(letter);
@@ -150,6 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let frame = 0;
     let gameOver = false;
     let score = 0;
+	let bestScore = 0;
+
 	let obstacleAspect = 1;
 	obstacleImg.onload = () => {
 		obstacleAspect = obstacleImg.width / obstacleImg.height;
@@ -203,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	            if (player.x < obs.x + obs.width && player.x + player.width > obs.x &&
 	                player.y < obs.y + obs.height && player.y + player.height > obs.y) {
 	                gameOver = true;
+					if (score > bestScore) bestScore = score;
 	            }
 	        });
 	        obstacles = obstacles.filter(o => o.x + o.width >= 0);
@@ -218,11 +240,23 @@ document.addEventListener('DOMContentLoaded', () => {
 	    ctx.font = 'bold 16px Quicksand';
 	    ctx.fillText(`Điểm: ${score}`, LOGIC_W - 100, 30);
 	
-	    if (gameOver) {
-	        ctx.font = 'bold 28px Quicksand';
-	        ctx.fillStyle = '#E96A5C';
-	        ctx.fillText('Thua keo này ta bày keo khác. Bạn đã sống sót được ${score} giây rồi! — nhấn Space để chơi lại', 130, LOGIC_H/2);
-	    }
+		if (gameOver) {
+		    ctx.save();
+		    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+		    ctx.fillRect(0, 0, LOGIC_W, LOGIC_H);
+		    ctx.textAlign = 'center';
+		    ctx.textBaseline = 'middle';
+		    ctx.fillStyle = '#FDFBF7';
+		    ctx.font = 'bold 28px Quicksand';
+		    ctx.fillText('Thua keo này ta bày keo khác.', LOGIC_W / 2, LOGIC_H / 2 - 20);
+		    ctx.font = 'bold 18px Quicksand';
+		    ctx.fillText(`Bạn đã sống sót được: ${score} giây  |  Best: ${bestScore} giây`, LOGIC_W / 2, LOGIC_H / 2 + 12);
+		    ctx.fillStyle = '#FFE66D';
+		    ctx.font = 'bold 16px Quicksand';
+		    ctx.fillText('Nhấn Space để chơi lại', LOGIC_W / 2, LOGIC_H / 2 + 44);
+		    ctx.restore();
+		}
+
 	
 	    requestAnimationFrame(update);
 	}
@@ -259,5 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
 
