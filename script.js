@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.addEventListener('click', enableBgm);
 	
+	const spotifyBtn = document.getElementById('spotify-btn');
+	const spotify = document.getElementById('spotify');
+
     const house = document.getElementById('house');
     const messageBtn = document.getElementById('message-btn');
     const pomodoroBtn = document.getElementById('pomodoro-btn');
@@ -50,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
     pomodoroBtn.addEventListener('click', () => {
         openPopup(pomodoro);
     });
+	
+	spotifyBtn.addEventListener('click', () => {
+	    openPopup(spotify);
+	});
 
     // ===== Pomodoro Logic =====
     const modes = {
@@ -166,45 +173,60 @@ document.addEventListener('DOMContentLoaded', () => {
 			ctx.drawImage(obstacleImg, obs.x, obs.y, obs.width, obs.height);
 		});
 	}
+	
+	function resetGameState() {
+	    obstacles = [];
+	    frame = 0;
+	    score = 0;
+	    gameOver = false;
+	    player.x = 50;
+	    player.velocity = 0;
+	    player.y = LOGIC_H - player.height - groundOffset;
+	}
 
-    function update() {
-        if (gameOver) {
-            alert(`Thua keo này ta bày keo khác! Mày đã sống sót được: ${score} giây rồi`);
-            return;
-        }
-        frame++;
-        player.velocity += player.gravity;
-        player.y += player.velocity;
-        if (player.y > LOGIC_H - player.height - groundOffset) player.y = LOGIC_H - player.height - groundOffset;
+	function update() {
+	    frame++;
+	
+	    if (!gameOver) {
+	        player.velocity += player.gravity;
+	        player.y += player.velocity;
+	        if (player.y > LOGIC_H - player.height - groundOffset) player.y = LOGIC_H - player.height - groundOffset;
+	
+	        if (frame % 100 === 0) {
+	            const h = 55;
+	            const w = h * obstacleAspect;
+	            obstacles.push({ x: LOGIC_W, y: LOGIC_H - h - groundOffset, width: w, height: h });
+	        }
+	
+	        obstacles.forEach(obs => {
+	            obs.x -= 5;
+	            if (player.x < obs.x + obs.width && player.x + player.width > obs.x &&
+	                player.y < obs.y + obs.height && player.y + player.height > obs.y) {
+	                gameOver = true;
+	            }
+	        });
+	        obstacles = obstacles.filter(o => o.x + o.width >= 0);
+	        score = Math.floor(frame / 60);
+	    }
+	
+	    ctx.clearRect(0, 0, LOGIC_W, LOGIC_H);
+	    ctx.fillStyle = '#87CEEB';
+	    ctx.fillRect(0, 0, LOGIC_W, LOGIC_H);
+	    drawPlayer();
+	    drawObstacles();
+	    ctx.fillStyle = '#1A535C';
+	    ctx.font = 'bold 16px Quicksand';
+	    ctx.fillText(`Thua keo này ta bày keo khác. Bạn đã sống sót được: ${score} giây rồi!`, LOGIC_W - 100, 30);
+	
+	    if (gameOver) {
+	        ctx.font = 'bold 28px Quicksand';
+	        ctx.fillStyle = '#E96A5C';
+	        ctx.fillText('Game Over — nhấn Space để chơi lại', 130, LOGIC_H/2);
+	    }
+	
+	    requestAnimationFrame(update);
+	}
 
-		if (frame % 100 === 0) {
-			const h = 55;
-			const w = h * obstacleAspect;
-			obstacles.push({ x: LOGIC_W, y: LOGIC_H - h - groundOffset, width: w, height: h });
-		}
-
-        obstacles.forEach(obs => {
-            obs.x -= 5;
-            if (player.x < obs.x + obs.width && player.x + player.width > obs.x &&
-                player.y < obs.y + obs.height && player.y + player.height > obs.y) {
-                gameOver = true;
-            }
-        });
-        obstacles = obstacles.filter(o => o.x + o.width >= 0);
-
-        score = Math.floor(frame / 60);
-
-        ctx.clearRect(0, 0, LOGIC_W, LOGIC_H);
-        ctx.fillStyle = '#87CEEB';
-        ctx.fillRect(0, 0, LOGIC_W, LOGIC_H);
-        drawPlayer();
-        drawObstacles();
-		ctx.fillStyle = '#1A535C';
-        ctx.font = 'bold 16px Quicksand';
-        ctx.fillText(`Điểm: ${score}`, LOGIC_W - 100, 30);
-
-        requestAnimationFrame(update);
-    }
 
     function startGame() {
         const dpr = window.devicePixelRatio || 1;
@@ -222,12 +244,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.translate(offsetX, offsetY);
         ctx.imageSmoothingEnabled = false;
 
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && player.y >= LOGIC_H - player.height - groundOffset) {
-                player.velocity = player.jump;
-            }
-        });
+		document.addEventListener('keydown', (e) => {
+		    if (e.code !== 'Space') return;
+		    e.preventDefault();
+		    if (gameOver) {
+		        resetGameState();
+		        return;
+		    }
+		    if (player.y >= LOGIC_H - player.height - groundOffset) {
+		        player.velocity = player.jump;
+		    }
+		});
         update();
     }
 
 });
+
