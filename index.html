@@ -16,6 +16,7 @@
     <div class="buttons-wrapper">
         <button id="message-btn">Lời nhắn</button>
         <button id="pomodoro-btn">Pomodoro</button>
+		<button id="spotify-btn">Spotify</button>
     </div>
     <div id="letter" class="hidden">
         <p>Tốt nghiệp rồi nhỉ...</p>
@@ -46,6 +47,12 @@
         </div>
         <p>Pomodoro đã hoàn thành: <span id="pomo-count">0</span></p>
     </div>
+	<div id="spotify" class="hidden">
+	  <h3 style="margin-top:0">Spotify</h3>
+	  <div class="spotify-embed">
+	    <iframe style="border-radius:12px" src="https://open.spotify.com/playlist/0qmvm08fWBMgXw80o16gfW?pi=maVkKgwJQuqqX" width="100%" height="352" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+	  </div>
+	</div>
     <div id="character" class="hidden"></div>
     <canvas id="game" class="hidden"></canvas>
 	<audio id="bgm" src="audio/bgm.mp3" autoplay loop></audio>
@@ -53,4 +60,5 @@
 </body>
 
 </html>
+
 
