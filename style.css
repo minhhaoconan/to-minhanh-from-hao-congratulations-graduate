@@ -202,4 +202,41 @@ p {font-weight:600;}
     height: 100%;
     background: rgba(253, 251, 247, 0.6);
     z-index: 100;
+
+}
+
+#spotify {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #F2E86D;
+    box-shadow: 0 6px 20px rgba(26, 83, 92, 0.15);
+    width: 380px;
+    max-width: 92%;
+    z-index: 200;
+}
+.spotify-embed {
+    width: 100%;
+}
+#spotify-btn {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    position: relative;
+    margin: 0 10px;
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #1DB954;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+#spotify-btn:hover {
+    background: #159c44;
+    transform: scale(1.05);
 }
