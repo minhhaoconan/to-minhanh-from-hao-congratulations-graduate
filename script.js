@@ -1,28 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-	
 	const bgm = document.getElementById('bgm');
 	bgm.volume = 0.7;
 	bgm.muted = true;
-	let spotifyMaster = false;
-	
-	function enableBgm() {
-	    bgm.muted = false;
-	    bgm.play();
-	    if (bgmToggle) setBgmToggleLabel();
-	    document.removeEventListener('click', enableBgm);
-	}
 
+	function enableBgm() {
+		bgm.muted = false;
+		bgm.play();
+		if (bgmToggle) setBgmToggleLabel();
+		document.removeEventListener('click', enableBgm);
+	}
 	document.addEventListener('click', enableBgm);
-	
+
 	const bgmToggle = document.getElementById('bgm-toggle');
-	
 	function isBgmPlaying(){ return !bgm.muted && !bgm.paused }
-	function setBgmToggleLabel(){ bgmToggle.textContent = isBgmPlaying() ? 'Tắt nhạc nền' : 'Bật nhạc nền' }
+	function setBgmToggleLabel(){ if(bgmToggle) bgmToggle.textContent = isBgmPlaying() ? 'Tắt nhạc nền' : 'Bật nhạc nền' }
 
 	const spotifyBtn = document.getElementById('spotify-btn');
 	const spotify = document.getElementById('spotify');
-	const spotifyPlay = document.getElementById('spotify-play');
-	const spotifyPause = document.getElementById('spotify-pause');
+
+	function openPopup(popupEl) {
+		const overlay = document.createElement('div');
+		overlay.classList.add('overlay');
+		document.body.appendChild(overlay);
+		popupEl.classList.remove('hidden');
+		overlay.addEventListener('click', () => {
+			popupEl.classList.add('hidden');
+			overlay.remove();
+		});
+	}
+
+	if (spotifyBtn) {
+		spotifyBtn.addEventListener('click', () => {
+			openPopup(spotify);
+			setBgmToggleLabel();
+		});
+	}
+
+	if (bgmToggle) {
+		bgmToggle.addEventListener('click', () => {
+			if (isBgmPlaying()) {
+				bgm.pause();
+			} else {
+				bgm.muted = false;
+				bgm.play().catch(()=>{});
+			}
+			setBgmToggleLabel();
+		});
+	}
 
 
     const house = document.getElementById('house');
@@ -41,36 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const groundOffset = 5;
 	const obstacleImg = new Image();
 	obstacleImg.src = 'img/obstacle.png';
-	
-	function openPopup(popupEl) {
-	    const overlay = document.createElement('div');
-	    overlay.classList.add('overlay');
-	    document.body.appendChild(overlay);
-	    if (popupEl === spotify) {
-	        spotifyMaster = true;
-	        bgm.pause();
-	    }
-	    popupEl.classList.remove('hidden');
-	    overlay.addEventListener('click', () => {
-	        popupEl.classList.add('hidden');
-	        overlay.remove();
-	    });
-	}
-	
-	spotifyBtn.addEventListener('click', () => {
-	    openPopup(spotify);
-	    setBgmToggleLabel();
-	});
-	
-	bgmToggle.addEventListener('click', () => {
-	    if (isBgmPlaying()) {
-	        bgm.pause();
-	    } else {
-	        bgm.muted = false;
-	        bgm.play().catch(()=>{});
-	    }
-	    setBgmToggleLabel();
-	});
 
     messageBtn.addEventListener('click', () => {
         openPopup(letter);
@@ -304,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
 
 
