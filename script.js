@@ -6,13 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	let spotifyMaster = false;
 	
 	function enableBgm() {
-	    if (!spotifyMaster) {
-	        bgm.muted = false;
-	        bgm.play();
-	    }
+	    bgm.muted = false;
+	    bgm.play();
+	    if (bgmToggle) setBgmToggleLabel();
 	    document.removeEventListener('click', enableBgm);
 	}
+
 	document.addEventListener('click', enableBgm);
+	
+	const bgmToggle = document.getElementById('bgm-toggle');
+	
+	function isBgmPlaying(){ return !bgm.muted && !bgm.paused }
+	function setBgmToggleLabel(){ bgmToggle.textContent = isBgmPlaying() ? 'Tắt nhạc nền' : 'Bật nhạc nền' }
 
 	const spotifyBtn = document.getElementById('spotify-btn');
 	const spotify = document.getElementById('spotify');
@@ -52,13 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	    });
 	}
 	
-	spotifyPlay.addEventListener('click', () => {
-	    spotifyMaster = true;
-	    bgm.pause();
+	spotifyBtn.addEventListener('click', () => {
+	    openPopup(spotify);
+	    setBgmToggleLabel();
 	});
-	spotifyPause.addEventListener('click', () => {
-	    spotifyMaster = false;
-	    if (!bgm.muted) bgm.play();
+	
+	bgmToggle.addEventListener('click', () => {
+	    if (isBgmPlaying()) {
+	        bgm.pause();
+	    } else {
+	        bgm.muted = false;
+	        bgm.play().catch(()=>{});
+	    }
+	    setBgmToggleLabel();
 	});
 
     messageBtn.addEventListener('click', () => {
@@ -293,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
 
 
