@@ -216,12 +216,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	    drawObstacles();
 	    ctx.fillStyle = '#1A535C';
 	    ctx.font = 'bold 16px Quicksand';
-	    ctx.fillText(`Thua keo này ta bày keo khác. Bạn đã sống sót được: ${score} giây rồi!`, LOGIC_W - 100, 30);
+	    ctx.fillText(`Điểm: ${score}`, LOGIC_W - 100, 30);
 	
 	    if (gameOver) {
 	        ctx.font = 'bold 28px Quicksand';
 	        ctx.fillStyle = '#E96A5C';
-	        ctx.fillText('Game Over — nhấn Space để chơi lại', 130, LOGIC_H/2);
+	        ctx.fillText('Thua keo này ta bày keo khác. Bạn đã sống sót được ${score} giây rồi! — nhấn Space để chơi lại', 130, LOGIC_H/2);
 	    }
 	
 	    requestAnimationFrame(update);
@@ -259,4 +259,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
